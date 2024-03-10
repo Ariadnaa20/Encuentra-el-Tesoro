@@ -37,6 +37,9 @@ public class Mapa {
                 casillas[i][j] = new Casilla(false, null);
             }
         }
+        int llaveX = random.nextInt(tamaño);
+        int llaveY = random.nextInt(tamaño);
+        casillas[llaveX][llaveY].setTieneLlave(true);
 
         // Coloca obstáculos de manera aleatoria, pero deja espacio para al menos un acertijo y un tesoro.
         for (int i = 0; i < tamaño; i++) {
@@ -129,9 +132,38 @@ public class Mapa {
         return casillas[x][y].esObstaculo();
     }
 
+    public void eliminarObstaculos(int cantidad) {
+        Random random = new Random();
+        int eliminados = 0;
+
+        while (eliminados < cantidad) {
+            int x = random.nextInt(tamaño);
+            int y = random.nextInt(tamaño);
+
+            // Verifica si la casilla seleccionada aleatoriamente es un obstáculo y no contiene un tesoro ni un acertijo
+            if (casillas[x][y].esObstaculo() && !casillas[x][y].esTesoro() && casillas[x][y].getAcertijo() == null) {
+                casillas[x][y].setEsObstaculo(false); // Elimina el obstáculo
+                eliminados++;
+            }
+        }
+    }
+
     public int getTamaño() {
         return tamaño;
     }
+
+    public void colocarLlave() {
+        Random random = new Random();
+        int x, y;
+        do {
+            x = random.nextInt(tamaño);
+            y = random.nextInt(tamaño);
+        } while (casillas[x][y].esObstaculo() || casillas[x][y].esTesoro() || casillas[x][y].tieneLlave());
+        casillas[x][y].setTieneLlave(true);
+    }
+
+
+
 
 
 
