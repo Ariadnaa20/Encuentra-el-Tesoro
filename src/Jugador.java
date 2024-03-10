@@ -28,27 +28,37 @@ public class Jugador {
             default: System.out.println("Dirección no válida."); return false;
         }
 
-        if (!mapa.esPosicionValida(nuevaPosX, nuevaPosY)) {
-            System.out.println("Movimiento fuera de los límites del mapa. Intenta otra dirección.");
+        // Comprobación de límites del mapa primero
+        if (nuevaPosX < 0 || nuevaPosX >= mapa.getTamaño() || nuevaPosY < 0 || nuevaPosY >= mapa.getTamaño()) {
+            System.out.println("No puedes salirte del mapa. Intenta otra dirección.");
             return false;
-        } else if (mapa.casillaTieneObstaculo(nuevaPosX, nuevaPosY)) {
+        }
+
+        // Si está dentro de los límites, verificar si hay un obstáculo
+        else if (mapa.casillaTieneObstaculo(nuevaPosX, nuevaPosY)) {
+            // Si tiene monedas, puede superar el obstáculo
             if (this.monedas > 0) {
                 perderMoneda();
-                System.out.println("Has gastado una moneda para superar el obstáculo.");
+                System.out.println("Has gastado una moneda para superar el obstáculo. Monedas restantes: " + this.monedas);
                 posX = nuevaPosX;
                 posY = nuevaPosY;
                 return true;
             } else {
-                System.out.println("Movimiento bloqueado por un obstáculo y no tienes monedas para superarlo.");
+                System.out.println("Hay un obstáculo en tu camino y no tienes monedas para superarlo.");
                 return false;
             }
-        } else {
-            // Si no hay obstáculo, simplemente mueve al jugador
+        }
+
+        // Si no hay obstáculos y está dentro de los límites, el jugador se mueve
+        else {
             posX = nuevaPosX;
             posY = nuevaPosY;
+            System.out.println("Movimiento realizado a la posición (" + posX + ", " + posY + ")");
             return true;
         }
     }
+
+
 
 
 

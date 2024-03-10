@@ -7,7 +7,7 @@ public class Main {
         // Creación del mapa y asegurando que siempre haya al menos un acertijo.
         Mapa mapa = new Mapa(5); // Ajusta el tamaño del mapa según sea necesario.
         mapa.colocarTesoro();
-        mapa.colocarAcertijo(); // Asegúrate de implementar este método en la clase Mapa.
+        mapa.colocarAcertijos(); // Asegúrate de implementar este método en la clase Mapa.
 
         // Inicialización del jugador en la posición inicial.
         Jugador jugador = new Jugador("Explorador", 0, 0);
